@@ -7,41 +7,43 @@ import {
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 } from 'chart.js';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const ExpenseChart = ({ data }) => {
-  const chartData = {
-    labels: data.labels,
+const ExpenseChart = ({ transactions }) => {
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Expense Overview',
+      },
+    },
+  };
+
+  const data = {
+    labels: transactions.map((transaction) => transaction.date),
     datasets: [
       {
         label: 'Expenses',
-        data: data.values,
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        data: transactions.map((transaction) => transaction.amount),
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
       },
     ],
   };
 
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
+  if (!Array.isArray(transactions)) {
+    return <div>No data available</div>;
+  }
 
-  return <Bar data={chartData} options={options} />;
+  return <Bar options={options} data={data} />;
 };
 
 export default ExpenseChart;

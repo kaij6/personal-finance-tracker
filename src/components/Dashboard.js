@@ -1,50 +1,50 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import ExpenseChart from './ExpenseChart';
 import TransactionList from './TransactionList';
 import FinanceSummary from './FinanceSummary';
-import ExpenseChart from './ExpenseChart';
+import AddTransaction from './AddTransaction';
 
-const Dashboard = () => {
-  const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    values: [65, 59, 80, 81, 56, 55, 40],
+const Dashboard = ({ transactions, addTransaction }) => {
+  const [showAddTransaction, setShowAddTransaction] = useState(false);
+
+  const handleAddTransactionClick = () => {
+    setShowAddTransaction(!showAddTransaction);
+  };
+
+  const handleViewReportsClick = () => {
+    alert('View Reports functionality is not yet implemented.');
+  };
+
+  const handleManageAccountsClick = () => {
+    alert('Manage Accounts functionality is not yet implemented.');
   };
 
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <p>Welcome back, [User's Name]!</p>
-      
-      <FinanceSummary />
-      
-      <div className="quick-actions">
-        <Link to="/add-transaction" className="btn">Add Transaction</Link>
-        <Link to="/reports" className="btn">View Reports</Link>
-        <Link to="/manage-accounts" className="btn">Manage Accounts</Link>
+    <div className="container">
+      <header>
+        <h2>Dashboard</h2>
+      </header>
+      <div>
+        <p>Welcome back, [User's Name]!</p>
       </div>
-
-      <h3>Recent Transactions</h3>
-      <TransactionList />
-
-      <h3>Expense Overview</h3>
-      <ExpenseChart data={data} />
-
-      <style jsx>{`
-        .quick-actions {
-          margin: 20px 0;
-        }
-        .btn {
-          margin-right: 10px;
-          padding: 10px 20px;
-          background-color: #007bff;
-          color: white;
-          text-decoration: none;
-          border-radius: 5px;
-        }
-        .btn:hover {
-          background-color: #0056b3;
-        }
-      `}</style>
+      <div>
+        <FinanceSummary transactions={transactions} />
+      </div>
+      <div className="quick-actions">
+        <button onClick={handleAddTransactionClick}>Add Transaction</button>
+        <button onClick={handleViewReportsClick}>View Reports</button>
+        <button onClick={handleManageAccountsClick}>Manage Accounts</button>
+      </div>
+      {showAddTransaction && <AddTransaction addTransaction={addTransaction} />}
+      <div>
+        <h3>Recent Transactions</h3>
+        <TransactionList transactions={transactions} />
+      </div>
+      <div className="chart-container">
+        <h3>Expense Overview</h3>
+        <ExpenseChart transactions={transactions} />
+      </div>
+      <footer>© 2024 Personal Finance Tracker</footer>
     </div>
   );
 };

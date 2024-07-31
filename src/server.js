@@ -1,39 +1,48 @@
-const mongoose = require('mongoose');
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const path = require('path');
 
-// Replace <password> with the actual password
-const uri = "mongodb+srv://kaij6:Fgh245245@cluster0.gc9zvmz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
-
-// Initialize Express app
 const app = express();
+const port = 5000;
 
-// Middleware setup
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-// Serve static files from the React app in the 'dist' directory
-app.use(express.static(path.join(__dirname, '../dist')));
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/finance-tracker', { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Example API route
-app.get('/api/test', (req, res) => {
-  res.send('API is working!');
+// Define a transaction schema
+const transactionSchema = new mongoose.Schema({
+  date: String,
+  type: String,
+  category: String,
+  amount: Number,
 });
 
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+// Create a model
+const Transaction = mongoose.model('Transaction', transactionSchema);
+
+// Get all transactions
+app.get('/api/transactions', async (req, res) => {
+  try {
+    const transactions = await Transaction.find();
+    res.json(transactions);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch transactions' });
+  }
 });
 
-// Start the server
-const port = process.env.PORT || 5000;
+// Add a new transaction
+app.post('/api/transactions', async (req, res) => {
+  const transaction = new Transaction(req.body);
+  try {
+    await transaction.save();
+    res.status(201).json(transaction);
+  } catch (error) {
+    res.status(400).json({ error: 'Failed to add transaction' });
+  }
+});
+
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });

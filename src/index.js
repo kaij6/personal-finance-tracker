@@ -1,17 +1,12 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import "./App.scss";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 
-console.log("index.js is running");
+const container = document.getElementById('app');
+const root = ReactDOM.createRoot(container);
 
-document.addEventListener("DOMContentLoaded", function() {
-  const el = document.getElementById("app");
-  if (el) {
-    console.log("Element found:", el);
-    const root = createRoot(el);
-    root.render(<App />);
-  } else {
-    console.error("Element with id 'app' not found");
-  }
-});
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
