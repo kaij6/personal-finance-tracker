@@ -8,9 +8,10 @@ import {
   Title,
   Tooltip,
   Legend,
+  ArcElement, // Ensure ArcElement is registered if using doughnut or pie charts
 } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
 const ExpenseChart = ({ transactions }) => {
   const options = {

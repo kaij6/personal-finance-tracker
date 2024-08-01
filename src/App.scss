@@ -1,11 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f8fc;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
+  padding: 20px;
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #a3d5d3;
+  color: #ffffff;
   padding: 20px;
-  color: white;
+  font-size: 2em;
+  border-bottom: 5px solid #82b3b1;
+  border-radius: 10px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  background-color: #a3d5d3;
+  border-bottom: 2px solid #82b3b1;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+nav li {
+  margin: 0 15px;
+}
+
+nav a {
+  color: white; /* Ensure the text color is white in default state */
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 20px;
+  display: block;
+  border-radius: 5px;
+  background-color: #a3d5d3; /* Ensure a default background color */
+}
+
+nav a:hover {
+  background-color: #82b3b1;
 }
 
 .finance-summary {
@@ -25,14 +70,39 @@
 
 .main {
   padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 button {
-  margin: 10px;
+  background-color: #ff9999;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
 }
 
-input {
+button:hover {
+  background-color: #e68a8a;
+}
+
+input, select {
+  padding: 10px;
   margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+  border-color: #a3d5d3;
+  outline: none;
 }
 
 form {
@@ -40,4 +110,44 @@ form {
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+
+.budget-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 150px;
+  }
+
+  button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #ff9999;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #e68a8a;
+    }
+  }
+}
+
+.summary-by-category,
+.set-budget-limits {
+  margin-top: 40px;
+}
+
+footer {
+  margin-top: 20px;
+  font-size: 0.8em;
+  color: #777;
 }

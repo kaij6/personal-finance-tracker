@@ -1,17 +1,12 @@
 import React from 'react';
 
-const FinanceSummary = ({ transactions, totalIncome }) => {
-  const totalExpenses = transactions.reduce((acc, transaction) => {
-    return transaction.type === 'Expense' ? acc + Math.abs(transaction.amount) : acc;
-  }, 0);
-
-  const balance = totalIncome ? totalIncome - totalExpenses : 0;
-
+const FinanceSummary = ({ totalIncome, totalExpenses }) => {
+  const balance = (parseFloat(totalIncome || 0) - totalExpenses).toFixed(2);
   return (
     <div>
       <h2>Finance Summary</h2>
       <p>Total Income: ${totalIncome}</p>
-      <p>Total Expenses: ${totalExpenses}</p>
+      <p>Total Expenses: ${totalExpenses.toFixed(2)}</p>
       <p>Balance: ${balance}</p>
     </div>
   );

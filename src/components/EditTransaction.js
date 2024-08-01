@@ -1,29 +1,28 @@
-// src/components/AddTransaction.js
-import React, { useState } from 'react';
+// src/components/EditTransaction.js
+import React, { useState, useEffect } from 'react';
 
-const AddTransaction = ({ onAddTransaction }) => {
-  const [date, setDate] = useState('');
-  const [type, setType] = useState('Income');
-  const [category, setCategory] = useState('');
-  const [amount, setAmount] = useState('');
+const EditTransaction = ({ transaction, onUpdateTransaction }) => {
+  const [date, setDate] = useState(transaction.date);
+  const [type, setType] = useState(transaction.type);
+  const [category, setCategory] = useState(transaction.category);
+  const [amount, setAmount] = useState(transaction.amount);
+
+  useEffect(() => {
+    setDate(transaction.date);
+    setType(transaction.type);
+    setCategory(transaction.category);
+    setAmount(transaction.amount);
+  }, [transaction]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!date || !category || !amount) {
-      alert('Please fill in all fields');
-      return;
-    }
-    const newTransaction = {
+    onUpdateTransaction({
+      ...transaction,
       date,
       type,
       category,
       amount: parseFloat(amount),
-    };
-    onAddTransaction(newTransaction);
-    setDate('');
-    setType('Income');
-    setCategory('');
-    setAmount('');
+    });
   };
 
   return (
@@ -49,9 +48,9 @@ const AddTransaction = ({ onAddTransaction }) => {
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
-      <button type="submit">Add Transaction</button>
+      <button type="submit">Update Transaction</button>
     </form>
   );
 };
 
-export default AddTransaction;
+export default EditTransaction;
